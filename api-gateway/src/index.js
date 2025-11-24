@@ -2,8 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const roomsRoutes = require('./routes/rooms'); // rutas de salas
-const authRoutes = require('./routes/auth'); // rutas de auth (login/register)
+const roomsRoutes = require('./interfaces/http/routes/rooms'); // rutas de salas
+const authRoutes = require('./interfaces/http/routes/auth'); // rutas de auth (login/register)
 
 const app = express();
 
