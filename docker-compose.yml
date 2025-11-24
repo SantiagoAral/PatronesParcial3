@@ -1,0 +1,43 @@
+version: "3.9"
+services:
+  api:
+    build: ./api-gateway
+    ports: ["5000:5000"]
+    environment:
+      PORT: 5000
+      DB_HOST: db
+      DB_USER: chat
+      DB_PASS: chat123
+      DB_NAME: chatdb
+      JWT_SECRET: supersecret
+      RABBIT_URL: amqp://rabbit
+    depends_on: [db, rabbit]
+
+  websocket:
+    build: ./websocket-server
+    ports: ["4000:4000"]
+    environment:
+      PORT: 4000
+      DB_HOST: db
+      DB_USER: chat
+      DB_PASS: chat123
+      DB_NAME: chatdb
+      JWT_SECRET: supersecret
+      RABBIT_URL: amqp://rabbit
+    depends_on: [db, rabbit]
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: chat
+      POSTGRES_PASSWORD: chat123
+      POSTGRES_DB: chatdb
+    ports: ["5432:5432"]
+    volumes: [postgres_data:/var/lib/postgresql/data]
+
+  rabbit:
+    image: rabbitmq:3-management
+    ports: ["5672:5672","15672:15672"]
+
+volumes:
+  postgres_data:
