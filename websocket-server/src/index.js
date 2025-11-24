@@ -1,7 +1,8 @@
+
 const WebSocket = require("ws");
 const url = require("url");
-const { verifyToken } = require("./auth");
-const broker = require("./broker");
+const { verifyToken } = require("./infrastructure/auth/auth");
+const broker = require("./infrastructure/messaging/broker");
 const Pool = require("pg").Pool;
 
 const pool = new Pool({
