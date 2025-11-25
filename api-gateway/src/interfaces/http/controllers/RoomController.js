@@ -6,6 +6,8 @@ const SendMessage = require('../../../application/use-cases/SendMessage');
 
 class RoomController {
     constructor(roomRepository, messageRepository) {
+        this.roomRepository = roomRepository;
+        this.messageRepository = messageRepository;
         this.createRoom = new CreateRoom(roomRepository);
         this.joinRoom = new JoinRoom(roomRepository);
         this.listRooms = new ListRooms(roomRepository);
