@@ -1,7 +1,75 @@
-# Realtime Chat PoC
-Este PoC implementa un chat en tiempo real con WebSockets + RabbitMQ + Postgres.
+# Realtime Chat PoC --- README
 
-Santiago Andres Araque Araque y Sergio Gabriel Nieto Meneses
+Proyecto **Proof-of-Concept** de un sistema de **chat en tiempo real**,
+diseñado con **Clean Architecture / Hexagonal Architecture**, utilizando
+**Node.js, WebSockets, RabbitMQ y PostgreSQL**.
+
+Santiago Andres Araque Alfonso y Sergio Gabriel Nieto Meneses
+
+## Características principales
+
+-   Autenticación con **JWT** y contraseñas con **bcrypt**.
+-   Gestión de salas de chat: públicas y privadas (con contraseña).
+-   Envío y recepción de mensajes **en tiempo real**.
+-   Persistencia de historial en **PostgreSQL**.
+-   Escalabilidad mediante **RabbitMQ** (event-driven).
+-   Arquitectura modular, testeable y mantenible.
+
+## Estructura del proyecto
+
+    api-gateway/
+      src/
+        domain/
+        application/
+        infrastructure/
+        interfaces/
+
+    websocket-server/
+      src/
+        auth/
+        messaging/
+        interfaces/
+
+    db/
+      init_db.sql
+
+    simulate.py
+    docker-compose.yml
+
+## API --- Endpoints principales
+
+### Autenticación
+
+-   POST `/auth/register` → Registro
+-   POST `/auth/login` → Login (JWT)
+
+### Salas
+
+-   POST `/rooms/create`
+-   GET `/rooms/list`
+-   POST `/rooms/join`
+
+## WebSocket
+
+URL:
+
+    ws://localhost:4000?token=JWT
+
+Eventos: - JOIN_ROOM - LEAVE_ROOM - SEND_MESSAGE - RECEIVE_MESSAGE
+
+## Cómo ejecutar (Docker)
+
+    docker compose up -d --build
+    docker compose logs -f api websocket
+
+## Variables de entorno
+
+    PORT_API=5000
+    PORT_WS=4000
+    DATABASE_URL=postgres://user:pass@host:5432/db
+    RABBITMQ_URL=amqp://user:pass@host:5672
+    JWT_SECRET=super_secret
+
 
 Tests Realizados:
 
